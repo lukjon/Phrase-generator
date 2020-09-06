@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="jumbotron-img jumbotron jumbotron-fluid">
+        <div class="container">
+            <h1 class="display-4">{{ phrase }}</h1>
+            <p class="lead"></p>
+            <a class="btn btn-dark" href="/">Sugeneruok naują !</a>
+            <form>
+                <input type="hidden" value="{{ phrase }}">
+                <button class="btn btn-green">Išsaugoti</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}
+
