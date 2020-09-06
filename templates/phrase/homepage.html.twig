@@ -6,8 +6,8 @@
             <h1 class="display-4">{{ phrase }}</h1>
             <p class="lead"></p>
             <a class="btn btn-dark" href="/">Sugeneruok naują !</a>
-            <form>
-                <input type="hidden" value="{{ phrase }}">
+            <form action="{{ path('app_phrase_create') }}" method="post">
+                <input type="hidden" name="phrase_text" value="{{ phrase }}">
                 <button class="btn btn-green">Išsaugoti</button>
             </form>
         </div>

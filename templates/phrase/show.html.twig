@@ -3,8 +3,8 @@
 {% block body %}
     <div class="jumbotron-img jumbotron jumbotron-fluid">
         <div class="container">
-            <h1 class="display-4">SAVED: {{ phrase }}</h1>
-            <p class="lead"></p>
+            <h1 class="display-4"> {{ phrase }}</h1>
+            <p class="lead">Ši frazė buvo išsaugota: {{ phraseDate|date("Y/m/d") }}</p>
             <a class="btn btn-dark" href="/">Sugeneruok naują !</a>
             <form>
                 <input type="hidden" value="{{ phrase }}">

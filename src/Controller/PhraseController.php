@@ -69,43 +69,33 @@ sentence_ending
     }
 
     /**
-     * @Route("/phrases/new")
+     * @Route("/phrases/new", name="app_phrase_create", methods="POST")
      * @param EntityManagerInterface $entityManager
      * @throws \Exception
      */
     public function create(Request $request, EntityManagerInterface $entityManager)
     {
-        $text = "";
+        $text = $request->request->get('phrase_text');
 
         $phrase = new Phrase();
-        $phrase->getText($text)
-            ->setSlug('phrase-'.rand(0,5000000))
-            ->setCreatedAt(new \DateTime());
+        $phrase->setText($text);
+        $phrase->setSlug('phrase-'.rand(0,5000000));
+        $phrase->setCreatedAt(new \DateTime());
 
         $entityManager->persist($phrase);
         $entityManager->flush();
 
-//        return new Response(sprintf(
-//            'Well hallo! The shiny new question is id #%d, slug: %s',
-//            $question->getId(),
-//            $question->getSlug()
-//        ));
+        return $this->redirectToRoute('app_phrases',['slug' => $phrase->getSlug()]);
     }
 
     /**
-     * @Route("/phrases/{slug}")
+     * @Route("/phrases/{slug}", name="app_phrases")
      * @param $slug
      * @param EntityManagerInterface $entityManager
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function show($slug, EntityManagerInterface $entityManager)
     {
-        $answers = [
-            'Labas',
-            'iki',
-            'prstk'
-        ];
-
         $repository = $entityManager->getRepository(Phrase::class);
         /** @var Phrase|null $phrase */
         $phrase = $repository->findOneBy(['slug' => $slug]);
@@ -114,11 +104,9 @@ sentence_ending
             throw $this->createNotFoundException(sprintf("Phrase not found"));
         }
 
-        dd($phrase);
-
         return $this->render('phrase/show.html.twig', [
-            'phrase' => ucwords(str_replace('-', ' ', $slug)),
-            'answers' => $answers
+            'phrase' => $phrase->getText(),
+            'phraseDate' => $phrase->getCreatedAt()
         ]);
     }
 }
